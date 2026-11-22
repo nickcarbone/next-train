@@ -64,3 +64,10 @@
 [data-theme="nyc"] .nyc-screens.n6 .nyc-dir { padding-top: calc(var(--u) * .7); padding-bottom: calc(var(--u) * .7); }
 [data-theme="nyc"] .nyc-screens.n6 .nyc-label { font-size: calc(var(--u) * 2.4); }
 [data-theme="nyc"] .nyc-rows { overflow: hidden; }
+/* Seven or eight platforms (Times Sq): four rows of screens, two trains each; an odd last screen spans the width */
+[data-theme="nyc"] .nyc-screens.n7, [data-theme="nyc"] .nyc-screens.n8 { gap: calc(var(--u) * 1.6); padding: calc(var(--u) * 1.6) calc(var(--u) * 2.4); }
+[data-theme="nyc"] .nyc-screens.n7 .nyc-row, [data-theme="nyc"] .nyc-screens.n8 .nyc-row { font-size: calc(var(--u) * 2.6); padding-top: calc(var(--u) * .2); padding-bottom: calc(var(--u) * .2); }
+[data-theme="nyc"] .nyc-screens.n7 .nyc-bullet:not(.sm), [data-theme="nyc"] .nyc-screens.n8 .nyc-bullet:not(.sm) { --d: calc(var(--u) * 3.8); }
+[data-theme="nyc"] .nyc-screens.n7 .nyc-dir, [data-theme="nyc"] .nyc-screens.n8 .nyc-dir { padding-top: calc(var(--u) * .6); padding-bottom: calc(var(--u) * .6); }
+[data-theme="nyc"] .nyc-screens.n7 .nyc-label, [data-theme="nyc"] .nyc-screens.n8 .nyc-label { font-size: calc(var(--u) * 2.3); }
+[data-theme="nyc"] .nyc-screens.n7 .nyc-screen:last-child { grid-column: 1 / -1; }
