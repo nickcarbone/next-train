@@ -41,10 +41,30 @@ window.NT_STATIONS = [
     ]
   },
 
+  {
+    id: 'PEN', city: 'New York', name: '34 St–Penn Station', theme: 'nyc', tz: 'America/New_York',
+    source: { type: 'mta', feeds: ['gtfs', 'gtfs-ace'] },
+    platforms: [
+      { stop: '128N', label: 'Uptown & The Bronx' }, { stop: '128S', label: 'Downtown & Brooklyn' },
+      { stop: 'A28N', label: 'Uptown & Queens' }, { stop: 'A28S', label: 'Downtown & Brooklyn' }
+    ]
+  },
+  {
+    id: 'SUT', city: 'New York', name: 'Sutphin Blvd–Archer Av–JFK Airport', theme: 'nyc', tz: 'America/New_York',
+    source: { type: 'mta', feeds: ['gtfs-ace', 'gtfs-jz'] },
+    platforms: [
+      { stop: 'G06N', label: 'Jamaica Center' }, { stop: 'G06S', label: 'Manhattan & Brooklyn' }
+    ]
+  },
+
   /* ── Washington: WMATA predictions via Transitous (live rows only).
      Optional: a free WMATA key (Settings) adds car counts and BRD from WMATA's own feed. ── */
   { id: 'KST', city: 'Washington', name: 'King St–Old Town', theme: 'dc', tz: 'America/New_York',
     source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_C13', wmata: 'C13' } },
+  { id: 'BDR', city: 'Washington', name: 'Braddock Rd', theme: 'dc', tz: 'America/New_York',
+    source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_C12', wmata: 'C12' } },
+  { id: 'PYD', city: 'Washington', name: 'Potomac Yard', theme: 'dc', tz: 'America/New_York',
+    source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_C11', wmata: 'C11' } },
   { id: 'MCT', city: 'Washington', name: 'Metro Center', theme: 'dc', tz: 'America/New_York',
     source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_A01_C01', wmata: 'A01,C01' } },
   { id: 'GAL', city: 'Washington', name: 'Gallery Place', theme: 'dc', tz: 'America/New_York',
@@ -61,6 +81,7 @@ window.NT_STATIONS = [
   { id: 'OXC', city: 'London', name: 'Oxford Circus', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUOXC' } },
   { id: 'KXX', city: 'London', name: "King's Cross St. Pancras", theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUKSX' } },
   { id: 'BST', city: 'London', name: 'Baker Street', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUBST' } },
+  { id: 'BNK', city: 'London', name: 'Bank', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUBNK' } },
   { id: 'CYF', city: 'London', name: 'Canary Wharf', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUCYF' } },
   { id: 'WSM', city: 'London', name: 'Westminster', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUWSM' } },
 

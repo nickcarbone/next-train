@@ -16,9 +16,9 @@ No build step and no server. No keys are needed.
 
 | City | Board style | Stations | Source | Key |
 |---|---|---|---|---|
-| New York | LCD countdown clocks on subway tile, one per platform | Times Sq–42 St, 14 St–Union Sq, Grand Central–42 St, Atlantic Av–Barclays Ctr | MTA GTFS-realtime, read directly (protobuf decoded in the page) | None |
-| Washington | Platform PIDS: LN CAR DEST MIN, alerts scrolling along the bottom | King St–Old Town, Metro Center, Gallery Place, L'Enfant Plaza, Rosslyn, Union Station | WMATA real-time via Transitous; optionally WMATA directly | Optional (adds car counts) |
-| London | Tube dot-matrix platform indicators | Oxford Circus, King's Cross St. Pancras, Baker Street, Canary Wharf, Westminster | TfL Unified API | Optional (higher rate limit) |
+| New York | LCD countdown clocks on subway tile, one per platform | Times Sq–42 St, 14 St–Union Sq, Grand Central–42 St, Atlantic Av–Barclays Ctr, 34 St–Penn Station, Sutphin Blvd–Archer Av–JFK Airport | MTA GTFS-realtime, read directly (protobuf decoded in the page) | None |
+| Washington | Platform PIDS: LN CAR DEST MIN, alerts scrolling along the bottom | King St–Old Town, Braddock Rd, Potomac Yard, Metro Center, Gallery Place, L'Enfant Plaza, Rosslyn, Union Station | WMATA real-time via Transitous; optionally WMATA directly | Optional (adds car counts) |
+| London | Tube dot-matrix platform indicators | Oxford Circus, King's Cross St. Pancras, Baker Street, Bank, Canary Wharf, Westminster | TfL Unified API | Optional (higher rate limit) |
 | Paris | Platform panels: next two trains per direction | Charles de Gaulle – Étoile, Bastille, Concorde, Abbesses | Île-de-France Mobilités real-time via Transitous | None |
 | Berlin | BVG platform monitors, dark design | Alexanderplatz, Hermannplatz, Zoologischer Garten, Wittenbergplatz | VBB/BVG real-time via Transitous (U-Bahn only) | None |
 | Stockholm | SL platform screens, with SL's own countdown text ("Nu", "3 min") | T-Centralen, Slussen, Gamla stan, Odenplan | SL Transport API (Trafiklab) | None |
