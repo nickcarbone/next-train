@@ -1,0 +1,35 @@
+/* London — Tube platform dot-matrix indicators: amber LED on black, three lines.
+   Line one and two are the next trains; the third shows the next train after, the clock,
+   or the approaching-train warning. A small plate names the platform and its lines. */
+[data-theme="lon"] .board {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background-color: #e9e4d6;
+  background-image:
+    linear-gradient(rgba(0,0,0,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.06) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 30%, rgba(255,255,255,.5), rgba(0,0,0,.08) 85%);
+  background-size: calc(var(--u) * 5) calc(var(--u) * 2.5), calc(var(--u) * 5) calc(var(--u) * 5), 100% 100%;
+}
+[data-theme="lon"] .nt-head { background: #1c2f6b; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.8) calc(var(--u) * 3); border-radius: calc(var(--u) * .3); box-shadow: 0 calc(var(--u) * .5) calc(var(--u) * 1.6) rgba(0,0,0,.3); }
+[data-theme="lon"] .nt-name { font-size: calc(var(--u) * 4.8); font-weight: 600; letter-spacing: .01em; }
+[data-theme="lon"] .nt-clock { font-size: calc(var(--u) * 3.6); }
+
+[data-theme="lon"] .lon-screen { display: flex; flex-direction: column; justify-content: center; }
+[data-theme="lon"] .lon-plate { display: flex; align-items: center; gap: calc(var(--u) * .8); font-size: calc(var(--u) * 2.2); color: #222; font-weight: 600; margin-bottom: calc(var(--u) * .8); white-space: nowrap; overflow: hidden; }
+[data-theme="lon"] .lon-line { background: var(--c); color: #fff; padding: calc(var(--u) * .2) calc(var(--u) * .9); border-radius: calc(var(--u) * .3); font-size: .9em; }
+[data-theme="lon"] .lon-pf { margin-left: calc(var(--u) * .4); }
+[data-theme="lon"] .lon-dmi {
+  background: #0a0a0a; border: calc(var(--u) * .9) solid #1e1e1e; border-radius: calc(var(--u) * .4);
+  box-shadow: 0 calc(var(--u) * .6) calc(var(--u) * 1.8) rgba(0,0,0,.35), inset 0 0 calc(var(--u) * 3) #000;
+  padding: calc(var(--u) * 1.2) calc(var(--u) * 1.8);
+  font-family: "Doto", "Courier New", monospace; font-weight: 800; color: #ffa514; text-shadow: 0 0 calc(var(--u) * .5) rgba(255,150,0,.55);
+  background-image: radial-gradient(rgba(255,255,255,.035) 30%, transparent 32%); background-size: calc(var(--u) * .55) calc(var(--u) * .55);
+}
+[data-theme="lon"] .lon-l { display: flex; gap: calc(var(--u) * 1.4); align-items: baseline; height: calc(var(--u) * 4.4); font-size: calc(var(--u) * 3.3); white-space: nowrap; overflow: hidden; letter-spacing: .02em; }
+[data-theme="lon"] .lon-n { flex: none; width: 1.1em; }
+[data-theme="lon"] .lon-d { flex: 1; min-width: 0; overflow: hidden; text-overflow: clip; }
+[data-theme="lon"] .lon-t { flex: none; }
+[data-theme="lon"] .lon-c { justify-content: center; }
+[data-theme="lon"] .lon-third { overflow: hidden; }
+[data-theme="lon"] .lon-blink { animation: lon-blink 1s steps(1) infinite; }
+@keyframes lon-blink { 50% { opacity: .15; } }
+[data-theme="lon"] .nt-grid.n1 .lon-l { font-size: calc(var(--u) * 4.4); height: calc(var(--u) * 6); }

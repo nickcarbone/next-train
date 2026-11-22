@@ -1,0 +1,47 @@
+/* Washington — platform PIDS under the coffered concrete vault.
+   Columns LN CAR DEST MIN, as on Metro's screens; arrival times stay put while service alerts scroll along the bottom.
+   Station name on a dark-brown pylon band. */
+[data-theme="dc"] .board {
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+  background-color: #4a4540;
+  background-image:
+    radial-gradient(ellipse at 50% -10%, rgba(255,236,200,.22), transparent 60%),
+    linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(255,255,255,.06)),
+    linear-gradient(90deg, rgba(0,0,0,.42), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(255,255,255,.06)),
+    radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.55), transparent 70%);
+  background-size: 100% 100%, calc(var(--u) * 9) calc(var(--u) * 9), calc(var(--u) * 9) calc(var(--u) * 9), 100% 100%;
+}
+[data-theme="dc"] .nt-head { background: #3b2a1e; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.8) calc(var(--u) * 3); border-radius: calc(var(--u) * .4); box-shadow: 0 calc(var(--u) * .6) calc(var(--u) * 2) rgba(0,0,0,.45); }
+[data-theme="dc"] .nt-name { font-size: calc(var(--u) * 5); font-weight: 700; }
+[data-theme="dc"] .nt-clock { font-size: calc(var(--u) * 3.8); font-weight: 500; }
+
+[data-theme="dc"] .dc-wrap { flex: 1; min-height: 0; display: grid; gap: calc(var(--u) * 2.4); padding: calc(var(--u) * 2.4); align-content: center; }
+[data-theme="dc"] .dc-wrap.n2 { grid-template-columns: 1fr 1fr; }
+
+[data-theme="dc"] .dc-pids { display: flex; flex-direction: column; background: #050505; border: calc(var(--u) * .8) solid #1c1c1c; border-radius: calc(var(--u) * .5); box-shadow: 0 calc(var(--u) * 1) calc(var(--u) * 3) rgba(0,0,0,.6); overflow: hidden; min-height: calc(var(--u) * 44); }
+[data-theme="dc"] .dc-cap { padding: calc(var(--u) * 1) calc(var(--u) * 2); font-size: calc(var(--u) * 2.3); font-weight: 600; color: #bdbdbd; background: #141414; display: flex; align-items: center; gap: calc(var(--u) * .7); }
+[data-theme="dc"] .dc-dot { width: calc(var(--u) * 1.8); height: calc(var(--u) * 1.8); border-radius: 50%; background: var(--c); display: inline-block; margin-left: calc(var(--u) * .6); }
+
+[data-theme="dc"] .dc-grid { --cols: calc(var(--u) * 10) calc(var(--u) * 9) minmax(0, 1fr) calc(var(--u) * 12); flex: 1; display: flex; flex-direction: column; padding: calc(var(--u) * 1.2) calc(var(--u) * 2); font-family: "Roboto Condensed", "Helvetica Neue", Arial, sans-serif; }
+[data-theme="dc"] .dc-hdr, [data-theme="dc"] .dc-row { display: grid; grid-template-columns: var(--cols); align-items: center; column-gap: calc(var(--u) * 1.5); }
+[data-theme="dc"] .dc-hdr { font-size: calc(var(--u) * 2.6); font-weight: 700; color: #ff2a1a; letter-spacing: .04em; padding-bottom: calc(var(--u) * .8); }
+[data-theme="dc"] .dc-hdr span:last-child, [data-theme="dc"] .dc-min { text-align: right; }
+[data-theme="dc"] .dc-rows { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
+[data-theme="dc"] .dc-row { font-size: calc(var(--u) * 5); font-weight: 700; color: #ffb21a; height: calc(var(--u) * 8); text-transform: uppercase; }
+[data-theme="dc"] .dc-ln { display: inline-flex; align-items: center; justify-content: center; width: calc(var(--u) * 7.4); height: calc(var(--u) * 5.4); border-radius: calc(var(--u) * .6); background: var(--c); color: var(--t, #fff); font-size: .78em; }
+[data-theme="dc"] .no-car .dc-grid { --cols: calc(var(--u) * 10) minmax(0, 1fr) calc(var(--u) * 12); }
+[data-theme="dc"] .no-car .dc-car, [data-theme="dc"] .no-car .dc-hdr span:nth-child(2) { display: none; }
+[data-theme="dc"] .dc-wrap.n1 .dc-pids { width: min(100%, calc(var(--u) * 150)); justify-self: center; }
+[data-theme="dc"] .dc-car { text-align: center; font-variant-numeric: tabular-nums; }
+[data-theme="dc"] .dc-dest { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+[data-theme="dc"] .dc-min { font-variant-numeric: tabular-nums; }
+[data-theme="dc"] .dc-row.now .dc-min { animation: dc-blink 1s steps(1) infinite; }
+@keyframes dc-blink { 50% { opacity: .25; } }
+
+[data-theme="dc"] .dc-alert { flex: none; height: calc(var(--u) * 6.4); background: #121212; border-top: 1px solid #2a2a2a; overflow: hidden; display: flex; align-items: center; white-space: nowrap; font-family: "Roboto Condensed", Arial, sans-serif; font-size: calc(var(--u) * 3.2); color: #ffb21a; }
+[data-theme="dc"] .dc-marquee { display: inline-block; padding-left: 100%; animation: dc-scroll 40s linear infinite; }
+[data-theme="dc"] .dc-still { padding: 0 calc(var(--u) * 2); color: #8a8a8a; }
+@keyframes dc-scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+[data-theme="dc"] .dc-msg { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; font-size: calc(var(--u) * 5); font-weight: 700; color: #ffb21a; line-height: 1.35; }
+@media (orientation: portrait) { [data-theme="dc"] .dc-wrap.n2 { grid-template-columns: 1fr; } }

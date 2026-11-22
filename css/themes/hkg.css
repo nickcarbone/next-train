@@ -1,0 +1,19 @@
+/* Hong Kong — MTR platform screens: each headed by its line colour, destinations and times
+   alternating between Traditional Chinese and English. */
+[data-theme="hkg"] .board { font-family: Inter, "Noto Sans TC", "Helvetica Neue", Arial, sans-serif; background: linear-gradient(#d8d8d4, #c3c4c0); }
+[data-theme="hkg"] .nt-head { background: #1f1f1f; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.6) calc(var(--u) * 3); border-radius: calc(var(--u) * .4); }
+[data-theme="hkg"] .nt-name { flex: none; font-size: calc(var(--u) * 4.6); font-weight: 700; }
+[data-theme="hkg"] .hk-name-tc { flex: 1; font-size: calc(var(--u) * 4.6); font-weight: 700; font-family: "Noto Sans TC", sans-serif; }
+[data-theme="hkg"] .nt-clock { font-size: calc(var(--u) * 3.6); }
+
+[data-theme="hkg"] .hk-screen { display: flex; flex-direction: column; background: #0d0d10; color: #fff; border: calc(var(--u) * .6) solid #2a2a2a; border-radius: calc(var(--u) * .4); box-shadow: 0 calc(var(--u) * .6) calc(var(--u) * 1.8) rgba(0,0,0,.35); }
+[data-theme="hkg"] .hk-top { display: flex; justify-content: space-between; align-items: center; padding: calc(var(--u) * 1) calc(var(--u) * 2); background: var(--c); font-size: calc(var(--u) * 2.6); font-weight: 700; text-shadow: 0 0 2px rgba(0,0,0,.35); }
+[data-theme="hkg"] .hk-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; padding: calc(var(--u) * .4) calc(var(--u) * 2); }
+[data-theme="hkg"] .hk-r { display: flex; justify-content: space-between; align-items: center; gap: calc(var(--u) * 2); font-size: calc(var(--u) * 3.2); }
+[data-theme="hkg"] .hk-dest { font-weight: 600; white-space: nowrap; overflow: hidden; }
+[data-theme="hkg"] .hk-min { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+[data-theme="hkg"] .hk-r.soon .hk-min { color: #ffd23f; }
+[data-theme="hkg"] .hk-tc { font-family: "Noto Sans TC", sans-serif; }
+[data-theme="hkg"] .board:not(.hk-alt) .hk-en, [data-theme="hkg"] .board.hk-alt .hk-tc { display: none; }
+[data-theme="hkg"] .hk-delay { grid-column: 1 / -1; text-align: center; background: #b40000; color: #fff; font-weight: 700; padding: calc(var(--u) * 1); font-size: calc(var(--u) * 2.8); border-radius: calc(var(--u) * .4); }
+[data-theme="hkg"] .hk-msg { padding: calc(var(--u) * 4) calc(var(--u) * 3); font-size: calc(var(--u) * 4.2); font-weight: 700; text-align: center; }

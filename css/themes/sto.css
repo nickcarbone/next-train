@@ -1,0 +1,21 @@
+/* Stockholm — SL platform screens: line number in the line's colour, destination, and SL's own
+   countdown text ("Nu", "3 min"), set in the painted bedrock of a tunnelbana cave station. */
+[data-theme="sto"] .board {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background: radial-gradient(ellipse at 50% -20%, #2f5f86 0%, #183652 45%, #0c1c2c 100%);
+}
+[data-theme="sto"] .board::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18;
+  background: radial-gradient(circle at 20% 30%, #fff 0 1px, transparent 2px) 0 0 / calc(var(--u) * 9) calc(var(--u) * 7), radial-gradient(circle at 70% 60%, #9fd 0 1px, transparent 2px) 0 0 / calc(var(--u) * 13) calc(var(--u) * 11); }
+[data-theme="sto"] .nt-head { position: relative; background: #0b2a4a; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.6) calc(var(--u) * 3); border-radius: calc(var(--u) * .6); border: 1px solid rgba(255,255,255,.2); }
+[data-theme="sto"] .nt-name { font-size: calc(var(--u) * 4.8); font-weight: 700; }
+[data-theme="sto"] .nt-clock { font-size: calc(var(--u) * 3.6); }
+[data-theme="sto"] .nt-grid { position: relative; }
+[data-theme="sto"] .sto-screen { display: flex; flex-direction: column; background: #000; color: #fff; border: calc(var(--u) * .6) solid #2b2b2b; border-radius: calc(var(--u) * .5); box-shadow: 0 calc(var(--u) * .8) calc(var(--u) * 2.4) rgba(0,0,0,.6); }
+[data-theme="sto"] .sto-top { padding: calc(var(--u) * 1) calc(var(--u) * 2); font-size: calc(var(--u) * 2.4); font-weight: 700; color: #ddd; background: #111; }
+[data-theme="sto"] .sto-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; padding: calc(var(--u) * .4) calc(var(--u) * 2); }
+[data-theme="sto"] .sto-r { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: calc(var(--u) * 1.6); align-items: center; font-size: calc(var(--u) * 3.3); }
+[data-theme="sto"] .sto-ln { background: var(--c); color: #fff; font-weight: 800; min-width: 2.2em; text-align: center; border-radius: calc(var(--u) * .4); padding: calc(var(--u) * .2) calc(var(--u) * .6); font-size: .9em; }
+[data-theme="sto"] .sto-dest { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+[data-theme="sto"] .sto-min { font-weight: 700; color: #ffd84a; font-variant-numeric: tabular-nums; white-space: nowrap; }
+[data-theme="sto"] .sto-msg { padding: calc(var(--u) * 3); font-size: calc(var(--u) * 4); font-weight: 700; }
+[data-theme="sto"] .sto-msg small { display: block; margin-top: calc(var(--u) * 1.5); font-size: .6em; font-weight: 500; color: #bbb; }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Next Train</title>
+<meta name="description" content="Live metro arrival screens from cities around the world, each in the style of its own platform displays.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%23111%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2210%22 fill=%22%23ee352e%22/%3E%3Ctext x=%2216%22 y=%2221.5%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22Arial%22 font-weight=%22bold%22%3EN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@800&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@500;700&family=Roboto+Condensed:wght@500;700&display=swap">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/themes/nyc.css">
+<link rel="stylesheet" href="css/themes/dc.css">
+<link rel="stylesheet" href="css/themes/lon.css">
+<link rel="stylesheet" href="css/themes/par.css">
+<link rel="stylesheet" href="css/themes/ber.css">
+<link rel="stylesheet" href="css/themes/sto.css">
+<link rel="stylesheet" href="css/themes/hkg.css">
+</head>
+<body data-theme="nyc">
+  <nav id="hud" aria-label="Board controls">
+    <span class="brand">NEXT TRAIN</span>
+    <select id="stationSelect" aria-label="Choose a station"></select>
+    <label>Auto-roam
+      <select id="roamSelect" aria-label="Auto-roam interval">
+        <option value="0">Off</option><option value="5">5 min</option><option value="10">10 min</option><option value="20">20 min</option>
+      </select>
+    </label>
+    <button id="soundBtn" aria-pressed="false" title="A soft chime when a train is about to arrive">🔕 Chime off</button>
+    <button id="fsBtn" title="Fullscreen (F)">⛶ Fullscreen</button>
+    <button id="settingsBtn" title="Keys and data sources">⚙ Settings</button>
+    <span class="spacer"></span>
+    <span class="hint">← → change station · controls hide after 4 seconds</span>
+  </nav>
+
+  <main id="stage"><section class="board" id="board" aria-live="polite"></section></main>
+  <a id="badge" href="https://transitous.org/sources/" target="_blank" rel="noopener"><span class="dot"></span><span class="txt">LOADING</span></a>
+
+  <div id="settings" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <div class="panel">
+      <h2 id="setTitle">Settings &amp; data sources</h2>
+      <p>Every board works without a key. Keys are stored only in this browser and sent only to the provider they belong to.</p>
+
+      <h3>Washington Metro (optional)</h3>
+      <p>Boards already run live through Transitous. A free key from <a href="https://developer.wmata.com/" target="_blank" rel="noopener">developer.wmata.com</a> (default tier) switches to WMATA's own predictions, which add the number of cars and WMATA's short destination names.</p>
+      <label for="wmataKey">WMATA primary key</label><input id="wmataKey" autocomplete="off" spellcheck="false">
+
+      <h3>London (optional)</h3>
+      <p>London runs without a key. If a board ever stalls on TfL's anonymous rate limit, a free key from <a href="https://api-portal.tfl.gov.uk/" target="_blank" rel="noopener">api-portal.tfl.gov.uk</a> raises it.</p>
+      <label for="tflKey">TfL app key</label><input id="tflKey" autocomplete="off" spellcheck="false">
+
+      <h3>About the data</h3>
+      <p><b>Live only.</b> Every train on screen comes from a real-time prediction. Scheduled trips with no live data are never shown, and if a system's feed goes quiet the board says so instead.</p>
+      <p>New York: <a href="https://www.mta.info/developers" target="_blank" rel="noopener">MTA GTFS-realtime</a>. Washington, Paris and Berlin: operator real-time data (WMATA, Île-de-France Mobilités, VBB/BVG) via <a href="https://transitous.org/sources/" target="_blank" rel="noopener">Transitous</a> (map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>), or WMATA directly with a key. London: <a href="https://api.tfl.gov.uk/" target="_blank" rel="noopener">TfL Unified API</a> (powered by TfL Open Data). Stockholm: <a href="https://www.trafiklab.se/api/our-apis/sl/transport/" target="_blank" rel="noopener">SL Transport API</a> via Trafiklab. Hong Kong: <a href="https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data" target="_blank" rel="noopener">MTR Next Train</a> (DATA.GOV.HK).</p>
+      <p>Board styles are evocations of each system's platform screens. No operator logos or proprietary typefaces are used. The chime is an original two-note figure.</p>
+      <div class="actions"><button id="closeSettings">Cancel</button><button class="primary" id="saveSettings">Save</button></div>
+    </div>
+  </div>
+
+  <script src="js/util.js"></script>
+  <script src="js/gtfsrt.js"></script>
+  <script src="data/nyc-stops.js"></script>
+  <script src="data/hk-stations.js"></script>
+  <script src="data/systems.js"></script>
+  <script src="js/sources.js"></script>
+  <script src="js/renderers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
