@@ -48,7 +48,7 @@
       (x.place.alerts || []).forEach(a => a.headerText && alerts.add(a.descriptionText ? `${a.headerText}: ${a.descriptionText}` : a.headerText));
       const t = Date.parse(x.place.arrival || x.place.departure), dep = Date.parse(x.place.departure || x.place.arrival);
       return {
-        screen: (/_PF_([A-Z]\d\d)_/.exec(x.place.stopId) || [])[1] || x.place.stopId, raw: x,
+        screen: (st.source.splitTracks ? (/_PF_([A-Z]\d\d_\w+)$/.exec(x.place.stopId) || [])[1] : (/_PF_([A-Z]\d\d)_/.exec(x.place.stopId) || [])[1]) || x.place.stopId, raw: x,
         line: x.routeShortName || '', lineId: x.routeId || '', color: '#' + (x.routeColor || '777777'), text: '#' + (x.routeTextColor || 'ffffff'),
         dest: x.headsign || (x.tripTo && x.tripTo.name) || '', t, dep, track: x.place.track || ''
       };

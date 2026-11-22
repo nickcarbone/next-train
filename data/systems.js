@@ -51,6 +51,9 @@ window.NT_STATIONS = [
     source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_B01_F01', wmata: 'B01,F01' } },
   { id: 'LEP', city: 'Washington', name: "L'Enfant Plaza", theme: 'dc', tz: 'America/New_York',
     source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_D03_F03', wmata: 'D03,F03' } },
+  /* Rosslyn has stacked platforms (one per direction), so each track gets its own screen. */
+  { id: 'RSL', city: 'Washington', name: 'Rosslyn', theme: 'dc', tz: 'America/New_York',
+    source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_C05', wmata: 'C05', splitTracks: true } },
   { id: 'UNS', city: 'Washington', name: 'Union Station', theme: 'dc', tz: 'America/New_York',
     source: { type: 'transitous', stopId: 'us-dc-WMATA-rail_STN_B03', wmata: 'B03' } },
 
@@ -58,6 +61,7 @@ window.NT_STATIONS = [
   { id: 'OXC', city: 'London', name: 'Oxford Circus', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUOXC' } },
   { id: 'KXX', city: 'London', name: "King's Cross St. Pancras", theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUKSX' } },
   { id: 'BST', city: 'London', name: 'Baker Street', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUBST' } },
+  { id: 'CYF', city: 'London', name: 'Canary Wharf', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUCYF' } },
   { id: 'WSM', city: 'London', name: 'Westminster', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUWSM' } },
 
   /* ── Paris: RATP real-time via Transitous (IDFM), live rows only ───────── */
