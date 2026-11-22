@@ -26,7 +26,7 @@
       rows.forEach(r => { (served[r.screen] = served[r.screen] || new Map()).set(r.lineLabel + (r.express ? 'x' : ''), r); });
       el.querySelectorAll('.nyc-screen').forEach(sc => {
         const id = sc.dataset.screen;
-        const mine = rows.filter(r => r.screen === id && r.t > now - 20e3).slice(0, 3);
+        const mine = rows.filter(r => r.screen === id && r.t > now - 20e3).slice(0, st.platforms.length > 6 ? 2 : 3);
         const lines = [...(served[id] || new Map()).values()].sort((a, b) => a.lineLabel.localeCompare(b.lineLabel, 'en', { numeric: true }));
         sc.querySelector('.nyc-served').innerHTML = lines.map(r => nycBullet(r, true)).join('');
         sc.querySelector('.nyc-rows').innerHTML = mine.length ? mine.map(r => {

@@ -11,7 +11,10 @@ window.NT_STATIONS = [
     source: { type: 'mta', feeds: ['gtfs', 'gtfs-nqrw'] },
     platforms: [
       { stop: '127N', label: 'Uptown & The Bronx' }, { stop: '127S', label: 'Downtown & Brooklyn' },
-      { stop: 'R16N', label: 'Uptown & Queens' }, { stop: 'R16S', label: 'Downtown & Brooklyn' }
+      { stop: 'R16N', label: 'Uptown & Queens' }, { stop: 'R16S', label: 'Downtown & Brooklyn' },
+      { stop: '725N', label: 'Queens' }, { stop: '725S', label: '34 St–Hudson Yards' },
+      /* The Shuttle starts here, so only its Grand Central-bound departures are shown. */
+      { stop: '902S', label: 'Grand Central' }
     ]
   },
   {
