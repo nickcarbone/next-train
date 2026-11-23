@@ -1,0 +1,25 @@
+/* Prague — metro countdown screens with high-contrast line colours, set against the anodised,
+   dimpled metal wall panels of the Line A stations. */
+[data-theme="prg"] .board {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background-color: #b8964b;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255,240,200,.55) 0 calc(var(--u) * 1.2), rgba(90,60,10,.35) calc(var(--u) * 2.6), transparent calc(var(--u) * 2.7)),
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(0,0,0,.25));
+  background-size: calc(var(--u) * 6) calc(var(--u) * 6), 100% 100%;
+}
+[data-theme="prg"] .nt-head { background: #1a1a1a; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.6) calc(var(--u) * 3); border-radius: calc(var(--u) * .3); box-shadow: 0 calc(var(--u) * .5) calc(var(--u) * 1.5) rgba(0,0,0,.35); }
+[data-theme="prg"] .nt-name { font-size: calc(var(--u) * 5); font-weight: 700; }
+[data-theme="prg"] .nt-clock { font-size: calc(var(--u) * 3.6); }
+[data-theme="prg"] .prg-screen { display: flex; flex-direction: column; background: #0b0d12; color: #fff; border: calc(var(--u) * .6) solid #2b2b2b; border-radius: calc(var(--u) * .4); box-shadow: 0 calc(var(--u) * .7) calc(var(--u) * 2) rgba(0,0,0,.45); }
+[data-theme="prg"] .prg-top { display: flex; align-items: center; gap: calc(var(--u) * 1.6); padding: calc(var(--u) * 1.4) calc(var(--u) * 2); border-bottom: 1px solid #262a33; }
+[data-theme="prg"] .prg-ln { flex: none; width: calc(var(--u) * 5.6); height: calc(var(--u) * 5.6); background: var(--c); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: calc(var(--u) * 3.6); border-radius: calc(var(--u) * .5); }
+[data-theme="prg"] .prg-dir { min-width: 0; font-size: calc(var(--u) * 3.3); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+[data-theme="prg"] .prg-dir small { display: block; font-size: .5em; font-weight: 500; color: #9aa0aa; text-transform: uppercase; letter-spacing: .06em; }
+[data-theme="prg"] .prg-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; padding: calc(var(--u) * .5) calc(var(--u) * 2); }
+[data-theme="prg"] .prg-r { display: flex; justify-content: space-between; align-items: baseline; gap: calc(var(--u) * 2); }
+[data-theme="prg"] .prg-lbl { font-size: calc(var(--u) * 2.3); color: #b9bec6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+[data-theme="prg"] .prg-min { font-size: calc(var(--u) * 5.2); font-weight: 800; font-variant-numeric: tabular-nums; }
+[data-theme="prg"] .prg-min small { font-size: .45em; font-weight: 600; }
+[data-theme="prg"] .prg-msg { padding: calc(var(--u) * 3); font-size: calc(var(--u) * 3.8); font-weight: 700; }
+[data-theme="prg"] .prg-msg small { display: block; margin-top: calc(var(--u) * 1.5); font-size: .6em; font-weight: 500; color: #b9bec6; }

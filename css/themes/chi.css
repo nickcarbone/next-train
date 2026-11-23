@@ -1,0 +1,31 @@
+/* Chicago — CTA platform Train Tracker screens: black LCD, each train with its line colour beside it,
+   "Due" for an approaching train. Set among the riveted steel girders of the elevated 'L'. */
+[data-theme="chi"] .board {
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+  background-color: #3d4a3f;
+  background-image:
+    linear-gradient(90deg, transparent 0 calc(var(--u) * 10), rgba(0,0,0,.35) calc(var(--u) * 10) calc(var(--u) * 13), transparent calc(var(--u) * 13)),
+    radial-gradient(circle, rgba(0,0,0,.35) 0 calc(var(--u) * .35), transparent calc(var(--u) * .45)),
+    linear-gradient(180deg, rgba(255,255,255,.07), transparent 30%, rgba(0,0,0,.35)),
+    repeating-linear-gradient(45deg, transparent 0 calc(var(--u) * 6), rgba(0,0,0,.18) calc(var(--u) * 6) calc(var(--u) * 7.2));
+  background-size: calc(var(--u) * 40) 100%, calc(var(--u) * 3) calc(var(--u) * 3), 100% 100%, auto;
+}
+[data-theme="chi"] .nt-head { position: relative; background: #121417; color: #fff; margin: calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; padding: calc(var(--u) * 1.6) calc(var(--u) * 3) calc(var(--u) * 2.4); box-shadow: 0 calc(var(--u) * .6) calc(var(--u) * 1.8) rgba(0,0,0,.45); }
+[data-theme="chi"] .nt-name { font-size: calc(var(--u) * 5); font-weight: 700; }
+[data-theme="chi"] .nt-clock { font-size: calc(var(--u) * 3.6); font-weight: 500; }
+[data-theme="chi"] .chi-strip { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--u) * .8); display: flex; }
+[data-theme="chi"] .chi-strip span { flex: 1; background: var(--c); }
+
+[data-theme="chi"] .chi-screen { display: flex; flex-direction: column; background: #050505; color: #fff; border: calc(var(--u) * .7) solid #23262a; border-radius: calc(var(--u) * .4); box-shadow: 0 calc(var(--u) * .8) calc(var(--u) * 2.2) rgba(0,0,0,.5); }
+[data-theme="chi"] .chi-top { padding: calc(var(--u) * 1) calc(var(--u) * 2); font-size: calc(var(--u) * 2.4); font-weight: 700; color: #cfd3d6; background: #16181b; }
+[data-theme="chi"] .chi-top::before { content: "Toward "; font-weight: 500; color: #8d949a; }
+[data-theme="chi"] .chi-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; padding: calc(var(--u) * .4) calc(var(--u) * 2) calc(var(--u) * .4) 0; }
+[data-theme="chi"] .chi-r { display: grid; grid-template-columns: calc(var(--u) * 1.4) minmax(0, 1fr) auto; gap: calc(var(--u) * 1.6); align-items: center; font-size: calc(var(--u) * 3.3); }
+[data-theme="chi"] .chi-bar { align-self: stretch; background: var(--c); min-height: calc(var(--u) * 5); }
+[data-theme="chi"] .chi-dest { min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1; }
+[data-theme="chi"] .chi-dest small { display: block; font-size: .5em; font-weight: 500; color: #a9afb4; }
+[data-theme="chi"] .chi-min { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+[data-theme="chi"] .chi-r.due .chi-min { animation: chi-blink 1s steps(1) infinite; }
+@keyframes chi-blink { 50% { opacity: .3; } }
+[data-theme="chi"] .chi-msg { padding: calc(var(--u) * 3); font-size: calc(var(--u) * 4); font-weight: 700; }
+[data-theme="chi"] .chi-msg small { display: block; margin-top: calc(var(--u) * 1.5); font-size: .6em; font-weight: 500; color: #b5bbc0; }

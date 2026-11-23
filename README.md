@@ -10,7 +10,7 @@ Live metro arrival screens from around the world, for a second monitor. Pick a s
 2. In the repository, go to **Settings → Pages** and set the source to the `main` branch, root folder.
 3. Open `https://<user>.github.io/<repo>/`. Deep-link a station with a hash, e.g. `#KST` or `#TSQ`.
 
-No build step and no server. No keys are needed.
+No build step. Every city except Chicago works with no key and no server. Chicago needs the small Cloudflare Worker in `worker/` (free plan); its setup guide is `worker/README.md`.
 
 ## Systems and data sources
 
@@ -22,12 +22,18 @@ No build step and no server. No keys are needed.
 | Paris | Platform panels: next two trains per direction | Charles de Gaulle – Étoile, Bastille, Concorde, Abbesses | Île-de-France Mobilités real-time via Transitous | None |
 | Berlin | BVG platform monitors, dark design | Alexanderplatz, Hermannplatz, Zoologischer Garten, Wittenbergplatz | VBB/BVG real-time via Transitous (U-Bahn only) | None |
 | Stockholm | SL platform screens, with SL's own countdown text ("Nu", "3 min") | T-Centralen, Slussen, Gamla stan, Odenplan | SL Transport API (Trafiklab) | None |
+| Boston | Amber LED countdown signs over each platform, with ARR and BRD | Park Street, Downtown Crossing, Government Center, South Station | MBTA V3 API | Optional (higher rate limit) |
+| Prague | Metro countdown screens, line letter in its colour | Můstek, Muzeum, Florenc, Anděl | PID real-time via Transitous (metro only) | None |
+| Helsinki | Metro platform screens in HSL orange, Finnish and Swedish names | Rautatientori, Kamppi, Hakaniemi, Itäkeskus | HSL real-time via Transitous (metro only) | None |
+| Chicago | CTA Train Tracker platform screens, line colour beside each train, "Due" when approaching | Clark/Lake, Washington/Wabash, Chicago (Red), Belmont, Howard, Davis, O'Hare, Midway | CTA Train Tracker via the Next Train Worker (see `worker/README.md`) | CTA key, kept in the Worker |
 | Hong Kong | MTR platform screens, Chinese and English alternating | Admiralty, Central, Hong Kong, Kowloon Tong | MTR Next Train (DATA.GOV.HK) | None |
 
 How "live only" is enforced per source:
 
-- **Transitous** (Washington, Paris, Berlin): only rows flagged `realTime` are kept.
+- **Transitous** (Washington, Paris, Berlin, Prague, Helsinki): only rows flagged `realTime` are kept.
 - **SL**: only journeys carrying a live `prediction_state` are kept. Trains that haven't started their run yet are dropped.
+- **MBTA**: cancelled or skipped stops are dropped, as are trains ending their trip at the station.
+- **CTA**: predictions CTA marks as schedule-based (`isSch`) or faulty (`isFlt`) are dropped.
 - **MTA, TfL, MTR**: these are prediction feeds by design. A New York feed older than 10 minutes is treated as down.
 
 Arrival words such as "À l'approche" (Paris), "ARR"/"BRD" (Washington), "Arriving"/"Departing" (Hong Kong) and the London approaching-train warning come from the live prediction: they appear when the predicted arrival is under 30 seconds away, or has passed but the train hasn't yet departed.
@@ -57,6 +63,10 @@ The control bar hides after 4 seconds without mouse movement. ← / → change s
 - Berlin: VBB / BVG, via Transitous.
 - Stockholm: SL / Region Stockholm, via [Trafiklab](https://www.trafiklab.se/).
 - Hong Kong: MTR Corporation, via [DATA.GOV.HK](https://data.gov.hk/).
+- Boston: Massachusetts Bay Transportation Authority, MBTA V3 API.
+- Prague: Pražská integrovaná doprava (PID), via Transitous.
+- Helsinki: Helsinki Region Transport (HSL), via Transitous.
+- Chicago: Chicago Transit Authority, [CTA Train Tracker](https://www.transitchicago.com/developers/).
 - Transitous is volunteer-run and free for open-source, non-commercial projects. Keep this repository public and licensed as below.
 - Fonts: Google Fonts (Inter, Doto, Noto Sans TC, Roboto Condensed).
 

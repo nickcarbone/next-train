@@ -146,6 +146,56 @@
     return { rows: rows.filter(r => r.t > now - 90e3 && r.t < now + HORIZON), delayed, meta: { source: 'MTR Next Train', url: 'https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data', partial: ok.length < res.length } };
   }
 
+
+  /* ── Chicago: CTA Train Tracker through the Next Train Worker (the API needs a key and has no CORS).
+     Predictions CTA flags as schedule-based (isSch) or faulty (isFlt) are dropped. ── */
+  const CTA = {
+    Red: ['Red', '#c60c30'], Blue: ['Blue', '#00a1de'], Brn: ['Brown', '#62361b'], G: ['Green', '#009b3a'],
+    Org: ['Orange', '#f9461c'], P: ['Purple', '#522398'], Pink: ['Pink', '#e27ea6'], Y: ['Yellow', '#f9e300']
+  };
+  async function cta(st) {
+    const base = ((window.NT_SETTINGS || {}).workerUrl || window.NT_WORKER || '').replace(/\/+$/, '');
+    if (!base) throw new Error('no Worker address set');
+    const d = await U.fetchJSON(`${base}/cta/arrivals?mapid=${st.source.mapid}`);
+    const tt = d.ctatt || {};
+    if (tt.errCd && tt.errCd !== '0') throw new Error('CTA error ' + tt.errCd + ' ' + (tt.errNm || ''));
+    const now = Date.now();
+    const stamp = s => U.localStampToDate(s, st.tz).getTime() + (+s.slice(17, 19) || 0) * 1000;
+    const rows = (tt.eta || []).filter(x => x.isSch !== '1' && x.isFlt !== '1' && CTA[x.rt]).map(x => {
+      const t = stamp(x.arrT);
+      return { screen: x.stpId, label: (x.stpDe || '').replace(/^Service (toward|at) /i, ''), line: x.rt, lineName: CTA[x.rt][0], color: CTA[x.rt][1],
+        dest: x.destNm, due: x.isApp === '1', delayed: x.isDly === '1', run: x.rn, t, dep: t };
+    }).filter(r => r.t > now - 60e3 && r.t < now + HORIZON);
+    return { rows, meta: { source: 'CTA Train Tracker', url: 'https://www.transitchicago.com/developers/' } };
+  }
+
+
+  /* ── Boston: MBTA V3 API predictions (keyless; an optional key raises the 20-a-minute limit).
+     Cancelled or skipped stops are dropped, as are trains ending their trip here. ── */
+  async function mbta(st) {
+    const key = (window.NT_SETTINGS || {}).mbtaKey;
+    const q = new URLSearchParams({ 'filter[stop]': st.source.stop, 'filter[route_type]': '0,1', include: 'trip,route', sort: 'departure_time', 'page[limit]': '60' });
+    if (key) q.set('api_key', key);
+    const d = await U.fetchJSON(`https://api-v3.mbta.com/predictions?${q}`);
+    const inc = {};
+    (d.included || []).forEach(i => { inc[i.type + ':' + i.id] = i.attributes; });
+    const now = Date.now();
+    const rows = (d.data || []).filter(p => {
+      const a = p.attributes;
+      return a.departure_time && !/CANCELLED|SKIPPED|NO_DATA/.test(a.schedule_relationship || '');
+    }).map(p => {
+      const a = p.attributes, rel = p.relationships;
+      const route = inc['route:' + rel.route.data.id] || {}, trip = inc['trip:' + (rel.trip.data || {}).id] || {};
+      const dir = a.direction_id;
+      return { screen: rel.stop.data.id, line: rel.route.data.id, lineName: route.short_name || route.long_name || rel.route.data.id,
+        color: '#' + (route.color || '777777'), text: '#' + (route.text_color || 'ffffff'),
+        label: `${(route.direction_names || [])[dir] || ''}bound`.replace(/^bound$/, ''), toward: (route.direction_destinations || [])[dir] || '',
+        dest: trip.headsign || (route.direction_destinations || [])[dir] || '', status: a.status || '',
+        t: Date.parse(a.arrival_time || a.departure_time), dep: Date.parse(a.departure_time) };
+    }).filter(r => r.dep > now - 15e3 && r.t < now + HORIZON);
+    return { rows, meta: { source: 'MBTA V3 API', url: 'https://www.mbta.com/developers/v3-api' } };
+  }
+
   async function fetchStation(st) {
     let res;
     if (st.source.type === 'mta') res = await mta(st);
@@ -154,6 +204,8 @@
     else if (st.source.type === 'tfl') res = await tfl(st);
     else if (st.source.type === 'sl') res = await sl(st);
     else if (st.source.type === 'mtr') res = await mtr(st);
+    else if (st.source.type === 'cta') res = await cta(st);
+    else if (st.source.type === 'mbta') res = await mbta(st);
     else throw new Error('unknown source ' + st.source.type);
     if (!res.rows.length) { const e = new Error('no live trains'); e.empty = true; throw e; }
     res.rows.sort((a, b) => a.t - b.t);

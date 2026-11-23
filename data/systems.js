@@ -3,6 +3,10 @@
    theme:   which renderer and stylesheet to use (css/themes/<theme>.css)
    source:  where the live data comes from (see js/sources.js)
    Only live data is ever shown: if a source has no live trains, the board shows a service notice. */
+/* Address of the Next Train Cloudflare Worker (see worker/README.md). Needed for Chicago.
+   Settings → Worker address overrides this in one browser. */
+window.NT_WORKER = '';
+
 window.NT_STATIONS = [
   /* ── New York: MTA GTFS-realtime, read directly (no key) ───────────────────
      stops: parent station IDs from MTA static GTFS; labels: what each direction's platform is called. */
@@ -88,11 +92,29 @@ window.NT_STATIONS = [
   { id: 'CYF', city: 'London', name: 'Canary Wharf', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUCYF' } },
   { id: 'WSM', city: 'London', name: 'Westminster', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUWSM' } },
 
+  /* ── Boston: MBTA V3 API (keyless). stop: MBTA parent station ID. ── */
+  { id: 'PKS', city: 'Boston', name: 'Park Street', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-pktrm' } },
+  { id: 'DTX', city: 'Boston', name: 'Downtown Crossing', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-dwnxg' } },
+  { id: 'GOV', city: 'Boston', name: 'Government Center', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-gover' } },
+  { id: 'SST', city: 'Boston', name: 'South Station', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-sstat' } },
+
   /* ── Paris: RATP real-time via Transitous (IDFM), live rows only ───────── */
   { id: 'CDG', city: 'Paris', name: 'Charles de Gaulle – Étoile', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71347' } },
   { id: 'BAS', city: 'Paris', name: 'Bastille', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:463564' } },
   { id: 'CON', city: 'Paris', name: 'Concorde', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71298' } },
   { id: 'ABB', city: 'Paris', name: 'Abbesses', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71432' } },
+
+  /* ── Prague: PID real-time via Transitous, metro only, live rows only ──── */
+  { id: 'MUS', city: 'Prague', name: 'Můstek', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U1072S1' } },
+  { id: 'MUZ', city: 'Prague', name: 'Muzeum', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U400S1' } },
+  { id: 'FLO', city: 'Prague', name: 'Florenc', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U689S1' } },
+  { id: 'AND', city: 'Prague', name: 'Anděl', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U1040S1' } },
+
+  /* ── Helsinki: HSL real-time via Transitous, metro only, live rows only ── */
+  { id: 'RTT', city: 'Helsinki', name: 'Rautatientori', nameSv: 'Järnvägstorget', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000103' } },
+  { id: 'KMP', city: 'Helsinki', name: 'Kamppi', nameSv: 'Kampen', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000102' } },
+  { id: 'HKN', city: 'Helsinki', name: 'Hakaniemi', nameSv: 'Hagnäs', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000105' } },
+  { id: 'IKS', city: 'Helsinki', name: 'Itäkeskus', nameSv: 'Östra centrum', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000111' } },
 
   /* ── Berlin: BVG real-time via Transitous, U-Bahn only, live rows only ──── */
   { id: 'ALX', city: 'Berlin', name: 'Alexanderplatz', theme: 'ber', tz: 'Europe/Berlin', source: { type: 'transitous', stopId: 'de-DELFI_de:11000:900100003' } },
@@ -110,5 +132,15 @@ window.NT_STATIONS = [
   { id: 'ADM', city: 'Hong Kong', name: 'Admiralty', nameTc: '金鐘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'ADM', lines: ['TWL', 'ISL', 'SIL', 'EAL'] } },
   { id: 'CEN', city: 'Hong Kong', name: 'Central', nameTc: '中環', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'CEN', lines: ['TWL', 'ISL'] } },
   { id: 'HOK', city: 'Hong Kong', name: 'Hong Kong', nameTc: '香港', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'HOK', lines: ['TCL', 'AEL'] } },
-  { id: 'KOT', city: 'Hong Kong', name: 'Kowloon Tong', nameTc: '九龍塘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'KOT', lines: ['KTL', 'EAL'] } }
+  { id: 'KOT', city: 'Hong Kong', name: 'Kowloon Tong', nameTc: '九龍塘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'KOT', lines: ['KTL', 'EAL'] } },
+
+  /* ── Chicago: CTA Train Tracker via the Next Train Worker. mapid: CTA station ID. ── */
+  { id: 'CLK', city: 'Chicago', name: 'Clark/Lake', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40380' } },
+  { id: 'WWB', city: 'Chicago', name: 'Washington/Wabash', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41700' } },
+  { id: 'CHR', city: 'Chicago', name: 'Chicago', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41450' } },
+  { id: 'BEL', city: 'Chicago', name: 'Belmont', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41320' } },
+  { id: 'HOW', city: 'Chicago', name: 'Howard', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40900' } },
+  { id: 'DAV', city: 'Chicago', name: 'Davis', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40050' } },
+  { id: 'ORD', city: 'Chicago', name: "O'Hare", theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40890' } },
+  { id: 'MDW', city: 'Chicago', name: 'Midway', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40930' } }
 ];

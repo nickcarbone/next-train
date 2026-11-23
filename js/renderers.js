@@ -215,7 +215,28 @@
     }
   };
 
-  const THEMES = { nyc, dc, lon, par, ber, sto, hkg };
+  /* ── Chicago: CTA platform Train Tracker screens, line colour beside each train ── */
+  const chiTime = (r, now) => r.delayed ? 'Delayed' : (r.due || r.t - now < 60e3) ? 'Due' : `${minsTo(r.t, now)} min`;
+  const chi = {
+    build(el, st) { el.innerHTML = head(st, '<div class="chi-strip"></div>'); },
+    update(el, st, rows, now) {
+      const scr = screensOf(rows, now, 6, (a, b) => a.rows[0].label.localeCompare(b.rows[0].label));
+      const lines = [...new Map(rows.map(r => [r.line, r])).values()];
+      const strip = el.querySelector('.chi-strip');
+      if (strip) strip.innerHTML = lines.map(r => `<span style="--c:${r.color}"></span>`).join('');
+      grid(el, 'chi-grid', scr.map(sc => `<section class="chi-screen">
+          <div class="chi-top">${esc(sc.rows[0].label)}</div>
+          <div class="chi-rows">${sc.rows.slice(0, 3).map(r => `<div class="chi-r${r.due ? ' due' : ''}"><span class="chi-bar" style="--c:${r.color}"></span><span class="chi-dest"><small>${esc(r.lineName)} Line to</small>${esc(r.dest)}</span><span class="chi-min">${chiTime(r, now)}</span></div>`).join('')}</div>
+        </section>`).join(''), scr.length);
+    },
+    disruption(el, st) {
+      el.innerHTML = head(st, '<div class="chi-strip"></div>');
+      grid(el, 'chi-grid', `<section class="chi-screen"><div class="chi-top">Customer alert</div>
+        <div class="chi-msg">Train Tracker arrival times are not available right now.<br><small>Trains are still running. Times will return here as soon as the arrival feed is back on track.</small></div></section>`, 1);
+    }
+  };
+
+  const THEMES = { nyc, dc, lon, par, ber, sto, hkg, chi };
 
   window.Renderers = {
     THEMES,
@@ -225,7 +246,7 @@
     tickClock(el, st, now) {
       if (st.theme === 'lon') document.querySelectorAll('.js-hms').forEach(x => { x.textContent = U.hms(now, st.tz); });
       if (!el) return;
-      const f = st.theme === 'nyc' || st.theme === 'dc'
+      const f = st.tz.startsWith('America/')
         ? new Intl.DateTimeFormat('en-US', { timeZone: st.tz, hour: 'numeric', minute: '2-digit' }).format(now)
         : U.hm(now, st.tz);
       if (el.textContent !== f) el.textContent = f;
