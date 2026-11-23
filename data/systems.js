@@ -3,6 +3,10 @@
    theme:   which renderer and stylesheet to use (css/themes/<theme>.css)
    source:  where the live data comes from (see js/sources.js)
    Only live data is ever shown: if a source has no live trains, the board shows a service notice. */
+/* Address of the Next Train Cloudflare Worker (see worker/README.md). Needed for Chicago.
+   Settings → Worker address overrides this in one browser. */
+window.NT_WORKER = '';
+
 window.NT_STATIONS = [
   /* ── New York: MTA GTFS-realtime, read directly (no key) ───────────────────
      stops: parent station IDs from MTA static GTFS; labels: what each direction's platform is called. */
@@ -110,5 +114,12 @@ window.NT_STATIONS = [
   { id: 'ADM', city: 'Hong Kong', name: 'Admiralty', nameTc: '金鐘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'ADM', lines: ['TWL', 'ISL', 'SIL', 'EAL'] } },
   { id: 'CEN', city: 'Hong Kong', name: 'Central', nameTc: '中環', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'CEN', lines: ['TWL', 'ISL'] } },
   { id: 'HOK', city: 'Hong Kong', name: 'Hong Kong', nameTc: '香港', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'HOK', lines: ['TCL', 'AEL'] } },
-  { id: 'KOT', city: 'Hong Kong', name: 'Kowloon Tong', nameTc: '九龍塘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'KOT', lines: ['KTL', 'EAL'] } }
+  { id: 'KOT', city: 'Hong Kong', name: 'Kowloon Tong', nameTc: '九龍塘', theme: 'hkg', tz: 'Asia/Hong_Kong', source: { type: 'mtr', sta: 'KOT', lines: ['KTL', 'EAL'] } },
+
+  /* ── Chicago: CTA Train Tracker via the Next Train Worker. mapid: CTA station ID. ── */
+  { id: 'CLK', city: 'Chicago', name: 'Clark/Lake', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40380' } },
+  { id: 'WWB', city: 'Chicago', name: 'Washington/Wabash', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41700' } },
+  { id: 'CHR', city: 'Chicago', name: 'Chicago', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41450' } },
+  { id: 'BEL', city: 'Chicago', name: 'Belmont', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41320' } },
+  { id: 'ORD', city: 'Chicago', name: "O'Hare", theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40890' } }
 ];

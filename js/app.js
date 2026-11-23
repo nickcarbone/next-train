@@ -3,10 +3,10 @@
   const U = window.CU, R = window.Renderers;
   const ST = window.NT_STATIONS;
   const SKEY = 'nexttrain.settings';
-  const DEFAULTS = { station: 'TSQ', roam: 0, sound: false, wmataKey: '', tflKey: '' };
+  const DEFAULTS = { station: 'TSQ', roam: 0, sound: false, wmataKey: '', tflKey: '', workerUrl: '' };
   const S = window.NT_SETTINGS = Object.assign({}, DEFAULTS, U.load(SKEY, {}));
   const persist = () => U.save(SKEY, S);
-  const POLL = { mta: 30e3, transitous: 60e3, tfl: 30e3, sl: 30e3, mtr: 30e3 };
+  const POLL = { mta: 30e3, transitous: 60e3, tfl: 30e3, sl: 30e3, mtr: 30e3, cta: 30e3 };
 
   const board = document.getElementById('board');
   const badge = document.getElementById('badge');
@@ -157,7 +157,7 @@
   setRoam();
 
   /* ── Settings ────────────────────────────────────────────────────────── */
-  const fields = ['wmataKey', 'tflKey'];
+  const fields = ['wmataKey', 'tflKey', 'workerUrl'];
   document.getElementById('settingsBtn').addEventListener('click', () => { fields.forEach(f => { const i = document.getElementById(f); if (i) i.value = S[f] || ''; }); modal.classList.add('open'); });
   document.getElementById('closeSettings').addEventListener('click', () => modal.classList.remove('open'));
   modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });

@@ -146,6 +146,29 @@
     return { rows: rows.filter(r => r.t > now - 90e3 && r.t < now + HORIZON), delayed, meta: { source: 'MTR Next Train', url: 'https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data', partial: ok.length < res.length } };
   }
 
+
+  /* ── Chicago: CTA Train Tracker through the Next Train Worker (the API needs a key and has no CORS).
+     Predictions CTA flags as schedule-based (isSch) or faulty (isFlt) are dropped. ── */
+  const CTA = {
+    Red: ['Red', '#c60c30'], Blue: ['Blue', '#00a1de'], Brn: ['Brown', '#62361b'], G: ['Green', '#009b3a'],
+    Org: ['Orange', '#f9461c'], P: ['Purple', '#522398'], Pink: ['Pink', '#e27ea6'], Y: ['Yellow', '#f9e300']
+  };
+  async function cta(st) {
+    const base = ((window.NT_SETTINGS || {}).workerUrl || window.NT_WORKER || '').replace(/\/+$/, '');
+    if (!base) throw new Error('no Worker address set');
+    const d = await U.fetchJSON(`${base}/cta/arrivals?mapid=${st.source.mapid}`);
+    const tt = d.ctatt || {};
+    if (tt.errCd && tt.errCd !== '0') throw new Error('CTA error ' + tt.errCd + ' ' + (tt.errNm || ''));
+    const now = Date.now();
+    const stamp = s => U.localStampToDate(s, st.tz).getTime() + (+s.slice(17, 19) || 0) * 1000;
+    const rows = (tt.eta || []).filter(x => x.isSch !== '1' && x.isFlt !== '1' && CTA[x.rt]).map(x => {
+      const t = stamp(x.arrT);
+      return { screen: x.stpId, label: (x.stpDe || '').replace(/^Service (toward|at) /i, ''), line: x.rt, lineName: CTA[x.rt][0], color: CTA[x.rt][1],
+        dest: x.destNm, due: x.isApp === '1', delayed: x.isDly === '1', run: x.rn, t, dep: t };
+    }).filter(r => r.t > now - 60e3 && r.t < now + HORIZON);
+    return { rows, meta: { source: 'CTA Train Tracker', url: 'https://www.transitchicago.com/developers/' } };
+  }
+
   async function fetchStation(st) {
     let res;
     if (st.source.type === 'mta') res = await mta(st);
@@ -154,6 +177,7 @@
     else if (st.source.type === 'tfl') res = await tfl(st);
     else if (st.source.type === 'sl') res = await sl(st);
     else if (st.source.type === 'mtr') res = await mtr(st);
+    else if (st.source.type === 'cta') res = await cta(st);
     else throw new Error('unknown source ' + st.source.type);
     if (!res.rows.length) { const e = new Error('no live trains'); e.empty = true; throw e; }
     res.rows.sort((a, b) => a.t - b.t);
