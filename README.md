@@ -22,7 +22,7 @@ No build step. Every city except Chicago works with no key and no server. Chicag
 | Paris | Platform panels: next two trains per direction | Charles de Gaulle – Étoile, Bastille, Concorde, Abbesses | Île-de-France Mobilités real-time via Transitous | None |
 | Berlin | BVG platform monitors, dark design | Alexanderplatz, Hermannplatz, Zoologischer Garten, Wittenbergplatz | VBB/BVG real-time via Transitous (U-Bahn only) | None |
 | Stockholm | SL platform screens, with SL's own countdown text ("Nu", "3 min") | T-Centralen, Slussen, Gamla stan, Odenplan | SL Transport API (Trafiklab) | None |
-| Chicago | CTA Train Tracker platform screens, line colour beside each train, "Due" when approaching | Clark/Lake, Washington/Wabash, Chicago (Red), Belmont, O'Hare | CTA Train Tracker via the Next Train Worker (see `worker/README.md`) | CTA key, kept in the Worker |
+| Chicago | CTA Train Tracker platform screens, line colour beside each train, "Due" when approaching | Clark/Lake, Washington/Wabash, Chicago (Red), Belmont, Howard, Davis, O'Hare, Midway | CTA Train Tracker via the Next Train Worker (see `worker/README.md`) | CTA key, kept in the Worker |
 | Hong Kong | MTR platform screens, Chinese and English alternating | Admiralty, Central, Hong Kong, Kowloon Tong | MTR Next Train (DATA.GOV.HK) | None |
 
 How "live only" is enforced per source:

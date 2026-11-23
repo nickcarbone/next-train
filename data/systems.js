@@ -121,5 +121,8 @@ window.NT_STATIONS = [
   { id: 'WWB', city: 'Chicago', name: 'Washington/Wabash', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41700' } },
   { id: 'CHR', city: 'Chicago', name: 'Chicago', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41450' } },
   { id: 'BEL', city: 'Chicago', name: 'Belmont', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '41320' } },
-  { id: 'ORD', city: 'Chicago', name: "O'Hare", theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40890' } }
+  { id: 'HOW', city: 'Chicago', name: 'Howard', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40900' } },
+  { id: 'DAV', city: 'Chicago', name: 'Davis', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40050' } },
+  { id: 'ORD', city: 'Chicago', name: "O'Hare", theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40890' } },
+  { id: 'MDW', city: 'Chicago', name: 'Midway', theme: 'chi', tz: 'America/Chicago', source: { type: 'cta', mapid: '40930' } }
 ];
