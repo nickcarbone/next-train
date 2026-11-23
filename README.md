@@ -22,13 +22,17 @@ No build step. Every city except Chicago works with no key and no server. Chicag
 | Paris | Platform panels: next two trains per direction | Charles de Gaulle – Étoile, Bastille, Concorde, Abbesses | Île-de-France Mobilités real-time via Transitous | None |
 | Berlin | BVG platform monitors, dark design | Alexanderplatz, Hermannplatz, Zoologischer Garten, Wittenbergplatz | VBB/BVG real-time via Transitous (U-Bahn only) | None |
 | Stockholm | SL platform screens, with SL's own countdown text ("Nu", "3 min") | T-Centralen, Slussen, Gamla stan, Odenplan | SL Transport API (Trafiklab) | None |
+| Boston | Amber LED countdown signs over each platform, with ARR and BRD | Park Street, Downtown Crossing, Government Center, South Station | MBTA V3 API | Optional (higher rate limit) |
+| Prague | Metro countdown screens, line letter in its colour | Můstek, Muzeum, Florenc, Anděl | PID real-time via Transitous (metro only) | None |
+| Helsinki | Metro platform screens in HSL orange, Finnish and Swedish names | Rautatientori, Kamppi, Hakaniemi, Itäkeskus | HSL real-time via Transitous (metro only) | None |
 | Chicago | CTA Train Tracker platform screens, line colour beside each train, "Due" when approaching | Clark/Lake, Washington/Wabash, Chicago (Red), Belmont, Howard, Davis, O'Hare, Midway | CTA Train Tracker via the Next Train Worker (see `worker/README.md`) | CTA key, kept in the Worker |
 | Hong Kong | MTR platform screens, Chinese and English alternating | Admiralty, Central, Hong Kong, Kowloon Tong | MTR Next Train (DATA.GOV.HK) | None |
 
 How "live only" is enforced per source:
 
-- **Transitous** (Washington, Paris, Berlin): only rows flagged `realTime` are kept.
+- **Transitous** (Washington, Paris, Berlin, Prague, Helsinki): only rows flagged `realTime` are kept.
 - **SL**: only journeys carrying a live `prediction_state` are kept. Trains that haven't started their run yet are dropped.
+- **MBTA**: cancelled or skipped stops are dropped, as are trains ending their trip at the station.
 - **CTA**: predictions CTA marks as schedule-based (`isSch`) or faulty (`isFlt`) are dropped.
 - **MTA, TfL, MTR**: these are prediction feeds by design. A New York feed older than 10 minutes is treated as down.
 
@@ -59,6 +63,9 @@ The control bar hides after 4 seconds without mouse movement. ← / → change s
 - Berlin: VBB / BVG, via Transitous.
 - Stockholm: SL / Region Stockholm, via [Trafiklab](https://www.trafiklab.se/).
 - Hong Kong: MTR Corporation, via [DATA.GOV.HK](https://data.gov.hk/).
+- Boston: Massachusetts Bay Transportation Authority, MBTA V3 API.
+- Prague: Pražská integrovaná doprava (PID), via Transitous.
+- Helsinki: Helsinki Region Transport (HSL), via Transitous.
 - Chicago: Chicago Transit Authority, [CTA Train Tracker](https://www.transitchicago.com/developers/).
 - Transitous is volunteer-run and free for open-source, non-commercial projects. Keep this repository public and licensed as below.
 - Fonts: Google Fonts (Inter, Doto, Noto Sans TC, Roboto Condensed).

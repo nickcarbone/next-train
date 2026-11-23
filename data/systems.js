@@ -92,11 +92,29 @@ window.NT_STATIONS = [
   { id: 'CYF', city: 'London', name: 'Canary Wharf', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUCYF' } },
   { id: 'WSM', city: 'London', name: 'Westminster', theme: 'lon', tz: 'Europe/London', source: { type: 'tfl', naptan: '940GZZLUWSM' } },
 
+  /* ── Boston: MBTA V3 API (keyless). stop: MBTA parent station ID. ── */
+  { id: 'PKS', city: 'Boston', name: 'Park Street', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-pktrm' } },
+  { id: 'DTX', city: 'Boston', name: 'Downtown Crossing', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-dwnxg' } },
+  { id: 'GOV', city: 'Boston', name: 'Government Center', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-gover' } },
+  { id: 'SST', city: 'Boston', name: 'South Station', theme: 'bos', tz: 'America/New_York', source: { type: 'mbta', stop: 'place-sstat' } },
+
   /* ── Paris: RATP real-time via Transitous (IDFM), live rows only ───────── */
   { id: 'CDG', city: 'Paris', name: 'Charles de Gaulle – Étoile', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71347' } },
   { id: 'BAS', city: 'Paris', name: 'Bastille', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:463564' } },
   { id: 'CON', city: 'Paris', name: 'Concorde', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71298' } },
   { id: 'ABB', city: 'Paris', name: 'Abbesses', theme: 'par', tz: 'Europe/Paris', source: { type: 'transitous', stopId: 'fr-reseau-urbain-et-interurbain-dile-de-france-mobilites_IDFM:71432' } },
+
+  /* ── Prague: PID real-time via Transitous, metro only, live rows only ──── */
+  { id: 'MUS', city: 'Prague', name: 'Můstek', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U1072S1' } },
+  { id: 'MUZ', city: 'Prague', name: 'Muzeum', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U400S1' } },
+  { id: 'FLO', city: 'Prague', name: 'Florenc', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U689S1' } },
+  { id: 'AND', city: 'Prague', name: 'Anděl', theme: 'prg', tz: 'Europe/Prague', source: { type: 'transitous', stopId: 'cz-PID_U1040S1' } },
+
+  /* ── Helsinki: HSL real-time via Transitous, metro only, live rows only ── */
+  { id: 'RTT', city: 'Helsinki', name: 'Rautatientori', nameSv: 'Järnvägstorget', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000103' } },
+  { id: 'KMP', city: 'Helsinki', name: 'Kamppi', nameSv: 'Kampen', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000102' } },
+  { id: 'HKN', city: 'Helsinki', name: 'Hakaniemi', nameSv: 'Hagnäs', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000105' } },
+  { id: 'IKS', city: 'Helsinki', name: 'Itäkeskus', nameSv: 'Östra centrum', theme: 'hel', tz: 'Europe/Helsinki', source: { type: 'transitous', stopId: 'fi-hsl_1000111' } },
 
   /* ── Berlin: BVG real-time via Transitous, U-Bahn only, live rows only ──── */
   { id: 'ALX', city: 'Berlin', name: 'Alexanderplatz', theme: 'ber', tz: 'Europe/Berlin', source: { type: 'transitous', stopId: 'de-DELFI_de:11000:900100003' } },

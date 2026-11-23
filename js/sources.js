@@ -169,6 +169,33 @@
     return { rows, meta: { source: 'CTA Train Tracker', url: 'https://www.transitchicago.com/developers/' } };
   }
 
+
+  /* ── Boston: MBTA V3 API predictions (keyless; an optional key raises the 20-a-minute limit).
+     Cancelled or skipped stops are dropped, as are trains ending their trip here. ── */
+  async function mbta(st) {
+    const key = (window.NT_SETTINGS || {}).mbtaKey;
+    const q = new URLSearchParams({ 'filter[stop]': st.source.stop, 'filter[route_type]': '0,1', include: 'trip,route', sort: 'departure_time', 'page[limit]': '60' });
+    if (key) q.set('api_key', key);
+    const d = await U.fetchJSON(`https://api-v3.mbta.com/predictions?${q}`);
+    const inc = {};
+    (d.included || []).forEach(i => { inc[i.type + ':' + i.id] = i.attributes; });
+    const now = Date.now();
+    const rows = (d.data || []).filter(p => {
+      const a = p.attributes;
+      return a.departure_time && !/CANCELLED|SKIPPED|NO_DATA/.test(a.schedule_relationship || '');
+    }).map(p => {
+      const a = p.attributes, rel = p.relationships;
+      const route = inc['route:' + rel.route.data.id] || {}, trip = inc['trip:' + (rel.trip.data || {}).id] || {};
+      const dir = a.direction_id;
+      return { screen: rel.stop.data.id, line: rel.route.data.id, lineName: route.short_name || route.long_name || rel.route.data.id,
+        color: '#' + (route.color || '777777'), text: '#' + (route.text_color || 'ffffff'),
+        label: `${(route.direction_names || [])[dir] || ''}bound`.replace(/^bound$/, ''), toward: (route.direction_destinations || [])[dir] || '',
+        dest: trip.headsign || (route.direction_destinations || [])[dir] || '', status: a.status || '',
+        t: Date.parse(a.arrival_time || a.departure_time), dep: Date.parse(a.departure_time) };
+    }).filter(r => r.dep > now - 15e3 && r.t < now + HORIZON);
+    return { rows, meta: { source: 'MBTA V3 API', url: 'https://www.mbta.com/developers/v3-api' } };
+  }
+
   async function fetchStation(st) {
     let res;
     if (st.source.type === 'mta') res = await mta(st);
@@ -178,6 +205,7 @@
     else if (st.source.type === 'sl') res = await sl(st);
     else if (st.source.type === 'mtr') res = await mtr(st);
     else if (st.source.type === 'cta') res = await cta(st);
+    else if (st.source.type === 'mbta') res = await mbta(st);
     else throw new Error('unknown source ' + st.source.type);
     if (!res.rows.length) { const e = new Error('no live trains'); e.empty = true; throw e; }
     res.rows.sort((a, b) => a.t - b.t);

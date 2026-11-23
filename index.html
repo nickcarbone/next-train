@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="css/themes/sto.css">
 <link rel="stylesheet" href="css/themes/hkg.css">
 <link rel="stylesheet" href="css/themes/chi.css">
+<link rel="stylesheet" href="css/themes/bos.css">
+<link rel="stylesheet" href="css/themes/prg.css">
+<link rel="stylesheet" href="css/themes/hel.css">
 </head>
 <body data-theme="nyc">
   <nav id="hud" aria-label="Board controls">
@@ -53,13 +56,17 @@
       <p>London runs without a key. If a board ever stalls on TfL's anonymous rate limit, a free key from <a href="https://api-portal.tfl.gov.uk/" target="_blank" rel="noopener">api-portal.tfl.gov.uk</a> raises it.</p>
       <label for="tflKey">TfL app key</label><input id="tflKey" autocomplete="off" spellcheck="false">
 
+      <h3>Boston (optional)</h3>
+      <p>Boston runs without a key at up to 20 requests a minute. A free key from <a href="https://api-v3.mbta.com/" target="_blank" rel="noopener">api-v3.mbta.com</a> raises that if you run several screens.</p>
+      <label for="mbtaKey">MBTA API key</label><input id="mbtaKey" autocomplete="off" spellcheck="false">
+
       <h3>Chicago (Worker address)</h3>
       <p>Chicago's arrivals come through your own Cloudflare Worker, which holds the CTA key (see <code>worker/README.md</code>). The address is normally set in <code>data/systems.js</code>; anything typed here overrides it in this browser only.</p>
       <label for="workerUrl">Worker address</label><input id="workerUrl" autocomplete="off" spellcheck="false" placeholder="https://next-train.example.workers.dev">
 
       <h3>About the data</h3>
       <p><b>Live only.</b> Every train on screen comes from a real-time prediction. Scheduled trips with no live data are never shown, and if a system's feed goes quiet the board says so instead.</p>
-      <p>New York: <a href="https://www.mta.info/developers" target="_blank" rel="noopener">MTA GTFS-realtime</a>. Washington, Paris and Berlin: operator real-time data (WMATA, Île-de-France Mobilités, VBB/BVG) via <a href="https://transitous.org/sources/" target="_blank" rel="noopener">Transitous</a> (map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>), or WMATA directly with a key. London: <a href="https://api.tfl.gov.uk/" target="_blank" rel="noopener">TfL Unified API</a> (powered by TfL Open Data). Stockholm: <a href="https://www.trafiklab.se/api/our-apis/sl/transport/" target="_blank" rel="noopener">SL Transport API</a> via Trafiklab. Hong Kong: <a href="https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data" target="_blank" rel="noopener">MTR Next Train</a> (DATA.GOV.HK). Chicago: <a href="https://www.transitchicago.com/developers/" target="_blank" rel="noopener">CTA Train Tracker</a>, with predictions CTA marks as schedule-based left out.</p>
+      <p>New York: <a href="https://www.mta.info/developers" target="_blank" rel="noopener">MTA GTFS-realtime</a>. Washington, Paris and Berlin: operator real-time data (WMATA, Île-de-France Mobilités, VBB/BVG) via <a href="https://transitous.org/sources/" target="_blank" rel="noopener">Transitous</a> (map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>), or WMATA directly with a key. London: <a href="https://api.tfl.gov.uk/" target="_blank" rel="noopener">TfL Unified API</a> (powered by TfL Open Data). Stockholm: <a href="https://www.trafiklab.se/api/our-apis/sl/transport/" target="_blank" rel="noopener">SL Transport API</a> via Trafiklab. Hong Kong: <a href="https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data" target="_blank" rel="noopener">MTR Next Train</a> (DATA.GOV.HK). Chicago: <a href="https://www.transitchicago.com/developers/" target="_blank" rel="noopener">CTA Train Tracker</a>, with predictions CTA marks as schedule-based left out. Boston: <a href="https://www.mbta.com/developers/v3-api" target="_blank" rel="noopener">MBTA V3 API</a>. Prague and Helsinki: PID and HSL real-time data via Transitous.</p>
       <p>Board styles are evocations of each system's platform screens. No operator logos or proprietary typefaces are used. The chime is an original two-note figure.</p>
       <div class="actions"><button id="closeSettings">Cancel</button><button class="primary" id="saveSettings">Save</button></div>
     </div>
@@ -72,6 +79,7 @@
   <script src="data/systems.js"></script>
   <script src="js/sources.js"></script>
   <script src="js/renderers.js"></script>
+  <script src="js/renderers-more.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
